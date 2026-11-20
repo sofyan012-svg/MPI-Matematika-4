@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Pecahan Seru</title>
+<style>
+:root{--bg:#e8f3ff;--card:#fff;--ink:#0b2a55;--mut:#4a6a95;--b1:#1e6fe0;--b2:#59a5ff;--b3:#d6e9ff;--ok:#12a36b;--no:#e8772e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1a33;--card:#12294d;--ink:#eaf3ff;--mut:#9dbbe6;--b1:#4d95ff;--b2:#2a6fd1;--b3:#1c3a6b;--ok:#38d39a;--no:#ffa05c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a1a33;--card:#12294d;--ink:#eaf3ff;--mut:#9dbbe6;--b1:#4d95ff;--b2:#2a6fd1;--b3:#1c3a6b;--ok:#38d39a;--no:#ffa05c;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito","Segoe UI",system-ui,sans-serif;min-height:100vh}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--b1);color:#fff}
+.top b{flex:1;font-size:15px}
+.top button{background:#ffffff33;border:0;color:#fff;border-radius:20px;padding:6px 12px;font-size:14px;cursor:pointer}
+.bar{height:6px;background:#ffffff44}.bar i{display:block;height:100%;width:0;background:#ffd93d;transition:width .5s}
+main{max-width:760px;margin:0 auto;padding:16px}
+.s{display:none;animation:in .5s}.s.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:24px;padding:20px;box-shadow:0 6px 0 var(--b3),0 10px 24px #1e6fe022;margin-bottom:14px}
+h1{font-size:30px;margin:6px 0;color:var(--b1)}h2{font-size:22px;margin:0 0 8px;color:var(--b1)}
+p{line-height:1.55;font-size:17px;margin:8px 0}
+.hero{text-align:center;background:linear-gradient(160deg,var(--b1),var(--b2));color:#fff}
+.hero h1{color:#fff;font-size:34px}
+.floaty span{display:inline-block;font-size:44px;animation:fl 2.4s ease-in-out infinite}
+.floaty span:nth-child(2n){animation-delay:.4s}.floaty span:nth-child(3n){animation-delay:.9s}
+@keyframes fl{50%{transform:translateY(-14px) rotate(8deg)}}
+.btn{background:var(--b1);color:#fff;border:0;border-radius:18px;padding:13px 22px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 5px 0 #0d47a1;transition:transform .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0d47a1}
+.btn.y{background:#ffd93d;color:#5a4300;box-shadow:0 5px 0 #c9a400}
+.btn[disabled]{opacity:.45;cursor:default}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:10px}
+input[type=text]{width:100%;max-width:340px;font-size:18px;padding:12px 16px;border-radius:16px;border:3px solid #fff;text-align:center;font-family:inherit}
+.frac{display:inline-flex;flex-direction:column;align-items:center;font-weight:900;line-height:1.05;vertical-align:middle;margin:0 4px}
+.frac i{font-style:normal;padding:0 6px}.frac i+i{border-top:3px solid currentColor}
+.steps{display:grid;gap:12px}
+.step{display:flex;gap:14px;align-items:center;background:var(--b3);border-radius:18px;padding:14px;font-size:17px;line-height:1.45}
+.step .em{font-size:40px}
+.pies{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.pie{background:var(--b3);border-radius:20px;padding:12px;text-align:center;flex:1;min-width:140px}
+.pie svg{width:150px;height:150px;transition:transform .3s}.pie svg:hover{transform:rotate(20deg) scale(1.05)}
+.ctr{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
+.ctr button{width:44px;height:44px;border-radius:50%;border:0;background:var(--b1);color:#fff;font-size:24px;font-weight:900;cursor:pointer}
+.ctr b{font-size:20px}
+.verdict{text-align:center;font-size:24px;font-weight:900;color:var(--b1);min-height:70px;margin-top:10px}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.chip{background:var(--card);border:3px solid var(--b2);border-radius:18px;padding:8px 14px;text-align:center;cursor:pointer;min-width:92px;font-size:24px;transition:transform .15s}
+.chip:hover{transform:scale(1.07)}.chip.sel{background:#ffd93d;border-color:#c9a400;color:#5a4300;transform:scale(1.1)}
+.chip.used{opacity:.25;pointer-events:none}
+.chip .em{display:block;font-size:30px}
+.slot{background:var(--b3);border:3px dashed var(--b1);border-radius:18px;padding:8px;min-width:100px;min-height:112px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:24px}
+.slot small{font-size:13px;font-weight:800;color:var(--b1)}
+.slot.ok{border-color:var(--ok);background:#12a36b22}.slot.bad{border-color:var(--no);animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.qh{display:flex;justify-content:space-between;font-weight:800;color:var(--mut)}
+.fb{border-radius:18px;padding:14px;font-size:19px;font-weight:800;text-align:center;margin-top:10px;display:none}
+.fb.ok{display:block;background:#12a36b22;color:var(--ok);animation:pop .5s}.fb.no{display:block;background:#e8772e22;color:var(--no);animation:pop .5s}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+.big{font-size:64px;text-align:center}
+.emo{display:flex;gap:12px;justify-content:center;margin:10px 0}
+.emo button{font-size:40px;background:var(--b3);border:3px solid transparent;border-radius:50%;width:70px;height:70px;cursor:pointer}
+.emo button.on{border-color:var(--b1);transform:scale(1.15)}
+textarea{width:100%;border-radius:14px;border:3px solid var(--b3);padding:10px;font:inherit;font-size:16px;background:var(--card);color:var(--ink)}
+.fall{position:fixed;top:-50px;font-size:30px;pointer-events:none;z-index:20;animation:fa 2.2s linear forwards}
+@keyframes fa{to{transform:translateY(110vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="top"><b id="ttl">🍕 Pecahan Seru</b><button id="mus">🎵 Musik: mati</button><button id="vol">🔊 Suara</button></div>
+<div class="bar"><i id="pb"></i></div>
+<main>
+
+<section class="s on" id="s0">
+ <div class="card hero">
+  <div class="floaty"><span>🍕</span><span>🍉</span><span>🍰</span><span>🍊</span><span>🍫</span><span>🍎</span></div>
+  <h1>Petualangan Pecahan Seru!</h1>
+  <p>Matematika • Kelas 4 SD<br>Membandingkan dan Mengurutkan Pecahan</p>
+  <p>Halo, teman hebat! Siapa namamu?</p>
+  <input type="text" id="nm" placeholder="Ketik namamu di sini" maxlength="20">
+  <p><button class="btn y" id="go">Ayo Mulai! 🚀</button></p>
+ </div>
+</section>
+
+<section class="s" id="s1">
+ <div class="card">
+  <h2>🎯 Tujuan Belajar Kita</h2>
+  <p>Hai <b class="who">teman</b>! Setelah petualangan ini, kamu akan bisa:</p>
+  <div class="steps">
+   <div class="step"><span class="em">🍕</span><span><b>Membandingkan</b> dua pecahan yang pembilangnya satu, misalnya <span class="frac"><i>1</i><i>3</i></span> dan <span class="frac"><i>1</i><i>5</i></span>.</span></div>
+   <div class="step"><span class="em">🍉</span><span><b>Mengurutkan</b> beberapa pecahan pembilang satu dari yang terbesar sampai terkecil.</span></div>
+  </div>
+ </div>
+ <div class="nav"><button class="btn" data-go="0">⬅ Kembali</button><button class="btn" data-go="2">Lanjut ➡</button></div>
+</section>
+
+<section class="s" id="s2">
+ <div class="card">
+  <h2>📚 Materi Inti Singkat</h2>
+  <div class="steps" id="mat"></div>
+ </div>
+ <div class="nav"><button class="btn" data-go="1">⬅ Kembali</button><button class="btn" id="mn">Aku paham! ➡</button></div>
+</section>
+
+<section class="s" id="s3">
+ <div class="card">
+  <h2>🧪 Aktivitas: Bagi Pizza!</h2>
+  <p>Tekan tombol ➕ ➖ untuk mengubah jumlah potongan. Lihat potongan biru, itu yang kita ambil 1 bagian!</p>
+  <div class="pies">
+   <div class="pie"><div id="pA"></div><div class="ctr"><button data-p="A" data-d="-1">−</button><b id="nA"></b><button data-p="A" data-d="1">+</button></div></div>
+   <div class="pie"><div id="pB"></div><div class="ctr"><button data-p="B" data-d="-1">−</button><b id="nB"></b><button data-p="B" data-d="1">+</button></div></div>
+  </div>
+  <div class="verdict" id="vd"></div>
+ </div>
+ <div class="nav"><button class="btn" data-go="2">⬅ Kembali</button><button class="btn" data-go="4">Mulai Kuis 🎮</button></div>
+</section>
+
+<section class="s" id="s4">
+ <div class="card">
+  <div class="qh"><span id="qn">Soal 1 / 20</span><span id="sc">⭐ 0</span></div>
+  <h2 id="qt"></h2>
+  <p style="font-size:15px;color:var(--mut)">Ketuk pecahan, lalu ketuk kotak tujuannya untuk mencocokkan.</p>
+  <div class="row" id="items"></div>
+  <div class="row" id="slots"></div>
+  <div class="fb" id="fb"></div>
+  <div class="nav"><button class="btn" id="chk" disabled>Periksa ✅</button><button class="btn y" id="nxt" style="display:none">Lanjut ➡</button></div>
+ </div>
+</section>
+
+<section class="s" id="s5">
+ <div class="card hero">
+  <div class="big" id="trophy">🏆</div>
+  <h1 id="rt"></h1>
+  <p id="rs"></p>
+ </div>
+ <div class="card">
+  <h2>💭 Refleksi Diri</h2>
+  <p>Bagaimana perasaanmu setelah belajar pecahan?</p>
+  <div class="emo" id="emo"><button>😟</button><button>🙂</button><button>😄</button><button>🤩</button></div>
+  <p>Pecahan pembilang satu: semakin <b>besar</b> penyebutnya, pecahannya semakin ... ?</p>
+  <div class="row"><button class="btn" data-a="b">Besar</button><button class="btn" data-a="k">Kecil</button></div>
+  <div class="fb" id="rf"></div>
+  <p>Tulis satu hal baru yang kamu pelajari hari ini:</p>
+  <textarea rows="3" placeholder="Hari ini aku belajar bahwa ..."></textarea>
+  <div class="nav"><button class="btn y" id="again">Main Lagi 🔁</button></div>
+ </div>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const FR=['🍕','🍉','🍰','🍊','🍫','🍎','🍓','🍌','🍇','🍪'];
+const fr=n=>`<span class="frac"><i>1</i><i>${n}</i></span>`;
+let name='teman',cur=0,ac=null,musicOn=false,voiceOn=true,tick=0,timer=null;
+const prog=[0,15,30,50,75,100];
+
+/* ===== Suara ===== */
+function A(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended')ac.resume();return ac}
+function tone(f,d,t='sine',v=.15,at=0){const c=A();if(!c)return;const o=c.createOscillator(),g=c.createGain(),s=c.currentTime+at;o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(c.destination);o.start(s);o.stop(s+d)}
+function sfxOk(){if(!voiceOn)return;[523,659,784,1047].forEach((f,i)=>tone(f,.18,'triangle',.2,i*.09))}
+function sfxNo(){if(!voiceOn)return;[392,330].forEach((f,i)=>tone(f,.25,'sine',.18,i*.14))}
+function click(){if(voiceOn)tone(660,.07,'square',.06)}
+function say(t){if(!voiceOn||!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='id-ID';u.rate=1.05;u.pitch=1.35;speechSynthesis.speak(u)}
+const mel=[523,659,784,659,587,698,880,698,523,659,784,1047,988,784,659,587];
+const bass=[262,262,196,196,294,294,220,220];
+function music(){const c=A();if(!c)return;const i=tick++;tone(mel[i%16],.22,'triangle',.05);if(i%2==0)tone(bass[(i/2)%8|0],.4,'sine',.05)}
+$('#mus').onclick=()=>{A();musicOn=!musicOn;$('#mus').textContent=musicOn?'🎵 Musik: nyala':'🎵 Musik: mati';clearInterval(timer);if(musicOn)timer=setInterval(music,260)};
+$('#vol').onclick=()=>{voiceOn=!voiceOn;$('#vol').textContent=voiceOn?'🔊 Suara':'🔇 Senyap';if(!voiceOn&&window.speechSynthesis)speechSynthesis.cancel()};
+
+/* ===== Navigasi ===== */
+function show(n){cur=n;$$('.s').forEach((s,i)=>s.classList.toggle('on',i===n));$('#pb').style.width=prog[n]+'%';scrollTo({top:0,behavior:'smooth'});click();
+ if(n===3)pies();if(n===4&&!qs.length)startQuiz();}
+$$('[data-go]').forEach(b=>b.onclick=()=>show(+b.dataset.go));
+$('#go').onclick=()=>{name=$('#nm').value.trim()||'teman';$$('.who').forEach(e=>e.textContent=name);A();
+ if(!musicOn)$('#mus').click();say('Halo '+name+'! Ayo kita belajar pecahan!');show(1)};
+
+/* ===== Materi ===== */
+const mats=[['🍕','Pecahan <b>pembilang satu</b> berarti kita mengambil <b>1 bagian</b> dari sebuah benda yang dibagi sama besar. Contoh: pizza dibagi 4 sama besar, ambil 1 potong = '+fr(4)+'.'],
+['🍰','Penyebut menunjukkan <b>banyak potongan</b>. Pizza dibagi 8 potong, tiap potongnya <b>lebih kecil</b> daripada pizza dibagi 4 potong.'],
+['⚖️','Rahasianya: pembilang sama-sama 1, maka <b>penyebut lebih besar = pecahan lebih kecil</b>. Jadi '+fr(3)+' &gt; '+fr(5)+'.'],
+['🍉','Mengurutkan: cari penyebut terkecil dulu, itu pecahan terbesar! '+fr(2)+' &gt; '+fr(4)+' &gt; '+fr(8)+'.']];
+$('#mat').innerHTML=mats.map(m=>`<div class="step"><span class="em">${m[0]}</span><span>${m[1]}</span></div>`).join('');
+$('#mn').onclick=()=>{say('Hebat, kamu sudah paham!');show(3)};
+
+/* ===== Aktivitas ===== */
+const P={A:3,B:6};
+function pie(n,e){const r=70,cx=75,cy=75;let s='<svg viewBox="0 0 150 150">';
+ if(n==1)s+=`<circle cx="75" cy="75" r="70" fill="#1e6fe0" stroke="#fff" stroke-width="3"/>`;
+ else for(let i=0;i<n;i++){const a1=i/n*6.2832-1.5708,a2=(i+1)/n*6.2832-1.5708;
+  s+=`<path d="M75 75L${cx+r*Math.cos(a1)} ${cy+r*Math.sin(a1)}A70 70 0 0 1 ${cx+r*Math.cos(a2)} ${cy+r*Math.sin(a2)}Z" fill="${i==0?'#1e6fe0':'#ffe3a8'}" stroke="#fff" stroke-width="3"/>`}
+ return s+`<text x="75" y="${n==1?80:30}" font-size="26" text-anchor="middle">${e}</text></svg>`}
+function pies(){['A','B'].forEach((k,i)=>{$('#p'+k).innerHTML=pie(P[k],i?'🍉':'🍕');$('#n'+k).innerHTML=P[k]+' potong = '+fr(P[k])});
+ const a=P.A,b=P.B;$('#vd').innerHTML=a==b?'Sama besar! 🤝':a<b?`${fr(a)} &gt; ${fr(b)}<br><small>Potongan lebih sedikit = lebih besar! 😋</small>`:`${fr(a)} &lt; ${fr(b)}<br><small>Potongan lebih banyak = lebih kecil! 🔍</small>`}
+$$('.ctr button').forEach(b=>b.onclick=()=>{const k=b.dataset.p;P[k]=Math.min(12,Math.max(1,P[k]+ +b.dataset.d));click();pies()});
+
+/* ===== Kuis ===== */
+let qs=[],qi=0,score=0,right=0,att=0,sel=null,place=[];
+const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function pick(k){return sh([2,3,4,5,6,7,8,9,10,12]).slice(0,k)}
+function startQuiz(){qs=[];qi=0;score=0;right=0;
+ for(let i=0;i<20;i++){const k=i<10?2:3;qs.push({k,d:pick(k),e:sh(FR.slice()).slice(0,k)})}
+ loadQ()}
+function loadQ(){const q=qs[qi];att=0;sel=null;place=Array(q.k).fill(null);$('#fb').className='fb';$('#nxt').style.display='none';$('#chk').style.display='';$('#chk').disabled=true;
+ $('#qn').textContent=`Soal ${qi+1} / 20`;$('#sc').textContent='⭐ '+score;
+ $('#qt').textContent=q.k==2?'Cocokkan: mana pecahan yang lebih besar dan lebih kecil?':'Cocokkan: urutkan dari yang terbesar sampai terkecil!';
+ const lab=q.k==2?['Lebih besar','Lebih kecil']:['Terbesar','Tengah','Terkecil'];
+ q.lab=lab;$('#slots').innerHTML=lab.map((l,i)=>`<div class="slot" data-i="${i}"><small>${l}</small><span></span></div>`).join('');
+ draw();$$('.slot').forEach(s=>s.onclick=()=>putSlot(+s.dataset.i))}
+function draw(){const q=qs[qi];$('#items').innerHTML=q.d.map((n,i)=>`<div class="chip${place.includes(i)?' used':''}${sel===i?' sel':''}" data-i="${i}"><span class="em">${q.e[i]}</span>${fr(n)}</div>`).join('');
+ $$('.chip').forEach(c=>c.onclick=()=>{sel=+c.dataset.i;click();draw()});
+ $$('.slot').forEach((s,i)=>{s.querySelector('span').innerHTML=place[i]==null?'❔':`${q.e[place[i]]} ${fr(q.d[place[i]])}`});
+ $('#chk').disabled=place.includes(null)}
+function putSlot(i){const q=qs[qi];if($('#chk').style.display==='none')return;click();
+ if(place[i]!=null){place[i]=null;draw();return}
+ if(sel==null)return;place[i]=sel;sel=null;draw()}
+function fall(list){for(let i=0;i<24;i++){const e=document.createElement('div');e.className='fall';e.textContent=list[i%list.length];e.style.left=Math.random()*95+'vw';e.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),3000)}}
+$('#chk').onclick=()=>{const q=qs[qi];const order=q.d.map((n,i)=>i).sort((a,b)=>q.d[a]-q.d[b]);att++;
+ const okAll=order.every((v,i)=>place[i]===v);const fb=$('#fb');
+ $$('.slot').forEach((s,i)=>{s.classList.remove('ok','bad');s.classList.add(place[i]===order[i]?'ok':'bad')});
+ if(okAll){const pts=att==1?5:2;score+=pts;right++;$('#sc').textContent='⭐ '+score;
+  const m=sh(['Hebat sekali! Kamu pintar! 🌟','Luar biasa, jawabanmu benar! 🎉','Keren! Kamu jagoan pecahan! 🏅']);
+  fb.className='fb ok';fb.innerHTML=m[0]+` (+${pts} bintang)`;sfxOk();say('Kamu hebat!');fall(['🎉','⭐','🍓','🍕','🍊']);fin()}
+ else if(att>=2){fb.className='fb no';fb.innerHTML='Tidak apa-apa, belajar itu proses! 💪 Ayo lebih semangat! Ingat: penyebut kecil = pecahan besar.';sfxNo();say('Ayo, lebih semangat!');
+  place=order.slice();draw();$$('.slot').forEach(s=>{s.classList.remove('bad');s.classList.add('ok')});fin()}
+ else{fb.className='fb no';fb.innerHTML='Belum tepat, tapi kamu pasti bisa! 💪 Ayo lebih semangat, coba lagi ya!';sfxNo();say('Ayo, lebih semangat!');
+  setTimeout(()=>{place=Array(q.k).fill(null);sel=null;$$('.slot').forEach(s=>s.classList.remove('ok','bad'));draw()},1300)}};
+function fin(){$('#chk').style.display='none';$('#nxt').style.display='';$('#nxt').textContent=qi==19?'Lihat Hasil 🏆':'Lanjut ➡'}
+$('#nxt').onclick=()=>{click();if(qi==19)return result();qi++;loadQ()};
+
+/* ===== Hasil & Refleksi ===== */
+function result(){show(5);const p=right/20;
+ $('#trophy').textContent=p>=.8?'🏆':p>=.5?'🥈':'🌱';
+ $('#rt').textContent=p>=.8?`Luar biasa, ${name}!`:p>=.5?`Bagus, ${name}!`:`Terus semangat, ${name}!`;
+ $('#rs').innerHTML=`Kamu menjawab benar <b>${right} dari 20</b> soal dan mendapat <b>${score} bintang</b> ⭐<br>`+(p>=.8?'Kamu sudah jago membandingkan dan mengurutkan pecahan!':p>=.5?'Sedikit lagi kamu jadi jagoan pecahan. Ayo coba lagi!':'Tidak apa-apa, ayo baca materi lagi lalu main lagi. Kamu pasti bisa!');
+ if(p>=.5){sfxOk();say('Kamu hebat!');fall(['🎉','⭐','🍎','🍰','🍉'])}else{say('Ayo, lebih semangat!')}}
+$$('#emo button').forEach(b=>b.onclick=()=>{$$('#emo button').forEach(x=>x.classList.remove('on'));b.classList.add('on');click()});
+$$('[data-a]').forEach(b=>b.onclick=()=>{const f=$('#rf');if(b.dataset.a==='k'){f.className='fb ok';f.textContent='Benar! Penyebut makin besar, potongan makin kecil. Kamu hebat! 🎉';sfxOk();say('Kamu hebat!')}else{f.className='fb no';f.textContent='Hampir! Bayangkan pizza dipotong banyak sekali, potongannya jadi kecil. Ayo lebih semangat, coba lagi! 💪';sfxNo();say('Ayo, lebih semangat!')}});
+$('#again').onclick=()=>{qs=[];$('#rf').className='fb';show(0)};
+</script>
+</body>
+</html>
